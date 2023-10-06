@@ -180,6 +180,16 @@ where
     pub fn is_ok(&self) -> bool {
         self.0.is_ok()
     }
+
+    /// Return a reference to the underlying response data
+    pub fn inner_ref(&self) -> Result<&(Value<S>, Vec<ExecutionError<S>>), &GraphQLError<'a>> {
+        self.0.as_ref()
+    }
+
+    /// Return the underlying response data
+    pub fn into_inner(self) -> Result<(Value<S>, Vec<ExecutionError<S>>), GraphQLError<'a>> {
+        self.0
+    }
 }
 
 impl<'a, T> Serialize for GraphQLResponse<'a, T>
