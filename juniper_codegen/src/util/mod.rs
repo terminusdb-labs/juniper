@@ -886,7 +886,9 @@ impl GraphQLTypeDefiniton {
         };
         let (impl_generics, _, where_clause) = generics.split_for_impl();
 
-        let resolve_field_async = {
+        let resolve_field_async = if self.no_async {
+            quote!()
+        } else {
             let resolve_matches_async = self.fields.iter().map(|field| {
                 let name = &field.name;
                 let code = &field.resolver_code;
